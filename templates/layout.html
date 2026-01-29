@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+
+    <!-- Fonts: DM Serif Display for headings, DM Sans for body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'serif': ['DM Serif Display', 'Georgia', 'serif'],
+                        'sans': ['DM Sans', 'system-ui', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        'cream': '#faf9f7',
+                        'charcoal': '#1a1a1a',
+                        'accent': {
+                            'gold': '#c9a227',
+                            'emerald': '#10b981',
+                            'sapphire': '#3b82f6',
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fade-in-up 0.6s ease-out forwards',
+                        'fade-in': 'fade-in 0.4s ease-out forwards',
+                        'slide-in-left': 'slide-in-left 0.5s ease-out forwards',
+                        'ticker': 'ticker 0.1s steps(1) infinite',
+                        'pulse-subtle': 'pulse-subtle 2s ease-in-out infinite',
+                        'rotate-toggle': 'rotate-toggle 0.4s ease-out forwards',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* ===== CUSTOM ANIMATIONS ===== */
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slide-in-left {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes ticker {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        @keyframes pulse-subtle {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes rotate-toggle {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        /* Animation utility classes */
+        .animate-enter {
+            animation: fade-in-up 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        .animate-fade {
+            animation: fade-in 0.4s ease-out forwards;
+            opacity: 0;
+        }
+        .animate-slide {
+            animation: slide-in-left 0.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        /* Stagger delays */
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+        .delay-500 { animation-delay: 500ms; }
+        .delay-600 { animation-delay: 600ms; }
+        .delay-700 { animation-delay: 700ms; }
+        .delay-800 { animation-delay: 800ms; }
+
+        /* Glitch effect for ticker */
+        .glitch-text:hover {
+            animation: glitch 0.3s ease-in-out;
+        }
+
+        /* Ticker cursor */
+        .ticker-cursor::after {
+            content: '|';
+            animation: ticker 0.8s steps(1) infinite;
+            margin-left: 2px;
+        }
+
+        /* ===== HTMX TRANSITIONS ===== */
+        .htmx-swapping {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+        }
+
+        .htmx-settling {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        }
+
+        /* ===== CUSTOM SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 3px;
+        }
+
+        .dark ::-webkit-scrollbar-thumb {
+            background: #4b5563;
+        }
+
+        /* ===== CARD HOVER EFFECTS ===== */
+        .card-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+        }
+
+        .dark .card-lift:hover {
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* ===== NAV LINK UNDERLINE ===== */
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: currentColor;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* ===== TIMELINE ===== */
+        .timeline-dot {
+            position: relative;
+        }
+
+        .timeline-dot::before {
+            content: '';
+            position: absolute;
+            left: -29px;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: currentColor;
+            border: 3px solid;
+        }
+
+        /* ===== GRAIN OVERLAY ===== */
+        .grain::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
+            z-index: 9999;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(201, 162, 39, 0.1) 0%, transparent 50%);
+        }
+
+        .dark .stat-card {
+            background: linear-gradient(135deg, rgba(201, 162, 39, 0.15) 0%, transparent 50%);
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased bg-stone-50 text-slate-800 dark:bg-zinc-900 dark:text-stone-100 transition-colors duration-500 grain">
+
+<div class="min-h-screen flex flex-col lg:flex-row">
+    <!-- ===== MOBILE HEADER ===== -->
+    <header class="lg:hidden fixed top-0 left-0 right-0 h-16 bg-white/80 dark:bg-zinc-800/80 backdrop-blur-xl border-b border-slate-200 dark:border-zinc-700 z-50 flex items-center justify-between px-4">
+        <div class="font-serif text-lg font-normal tracking-tight">
+            {{ profile.name }}
+        </div>
+        <button onclick="toggleMobileMenu()" class="p-2 text-slate-600 dark:text-zinc-300">
+            <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+            <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+    </header>
+
+    <!-- ===== MOBILE MENU OVERLAY ===== -->
+    <div id="mobile-menu" class="fixed inset-0 bg-white dark:bg-zinc-900 z-40 transform translate-x-full transition-transform duration-300 lg:hidden pt-20 px-6 overflow-y-auto">
+        <nav class="space-y-2">
+            <a href="#" onclick="handleMobileNav(this)" hx-get="/partials/home" hx-target="#content-area" hx-swap="innerHTML transition:true" class="block px-4 py-3 rounded-lg text-lg font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800">Home</a>
+            <a href="#" onclick="handleMobileNav(this)" hx-get="/partials/experience" hx-target="#content-area" hx-swap="innerHTML transition:true" class="block px-4 py-3 rounded-lg text-lg font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800">Experience</a>
+            <a href="#" onclick="handleMobileNav(this)" hx-get="/partials/projects" hx-target="#content-area" hx-swap="innerHTML transition:true" class="block px-4 py-3 rounded-lg text-lg font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800">Projects</a>
+            <a href="#" onclick="handleMobileNav(this)" hx-get="/partials/skills" hx-target="#content-area" hx-swap="innerHTML transition:true" class="block px-4 py-3 rounded-lg text-lg font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800">Skills</a>
+            <a href="#" onclick="handleMobileNav(this)" hx-get="/partials/research" hx-target="#content-area" hx-swap="innerHTML transition:true" class="block px-4 py-3 rounded-lg text-lg font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800">Research</a>
+            <a href="#" onclick="handleMobileNav(this)" hx-get="/partials/contact" hx-target="#content-area" hx-swap="innerHTML transition:true" class="block px-4 py-3 rounded-lg text-lg font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800">Contact</a>
+        </nav>
+        <div class="mt-8 pt-8 border-t border-slate-200 dark:border-zinc-700">
+            <button onclick="toggleDarkMode()" class="w-full flex items-center justify-between px-4 py-3 rounded-lg text-lg font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800">
+                <span class="flex items-center gap-3">
+                    <span class="dark:hidden">Switch to Dark Mode</span>
+                    <span class="hidden dark:inline">Switch to Light Mode</span>
+                </span>
+                <svg class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="hidden lg:flex fixed left-0 top-0 h-screen w-64 border-r border-slate-200 dark:border-zinc-700 bg-white/80 dark:bg-zinc-800/80 backdrop-blur-xl z-40 flex-col">
+
+        <!-- Logo/Name -->
+        <div class="p-6 border-b border-slate-200 dark:border-zinc-700">
+            <div class="animate-slide">
+                <h1 class="font-serif text-xl font-normal tracking-tight">
+                    {{ profile.name }}
+                </h1>
+                <p class="text-xs text-slate-500 dark:text-zinc-400 mt-1 font-mono uppercase tracking-widest">
+                    Quantitative Finance
+                </p>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex-1 p-4">
+            <ul class="space-y-1">
+                <li class="animate-slide delay-100">
+                    <a href="#"
+                       hx-get="/partials/home"
+                       hx-target="#content-area"
+                       hx-swap="innerHTML transition:true"
+                       class="nav-link nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-700/50 transition-all active"
+                       onclick="setActiveNav(this)">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                        Home
+                    </a>
+                </li>
+                <li class="animate-slide delay-200">
+                    <a href="#"
+                       hx-get="/partials/experience"
+                       hx-target="#content-area"
+                       hx-swap="innerHTML transition:true"
+                       class="nav-link nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-700/50 transition-all"
+                       onclick="setActiveNav(this)">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        Experience
+                    </a>
+                </li>
+                <li class="animate-slide delay-300">
+                    <a href="#"
+                       hx-get="/partials/projects"
+                       hx-target="#content-area"
+                       hx-swap="innerHTML transition:true"
+                       class="nav-link nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-700/50 transition-all"
+                       onclick="setActiveNav(this)">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                        </svg>
+                        Projects
+                    </a>
+                </li>
+                <li class="animate-slide delay-400">
+                    <a href="#"
+                       hx-get="/partials/skills"
+                       hx-target="#content-area"
+                       hx-swap="innerHTML transition:true"
+                       class="nav-link nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-700/50 transition-all"
+                       onclick="setActiveNav(this)">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                        </svg>
+                        Skills
+                    </a>
+                </li>
+                <li class="animate-slide delay-500">
+                    <a href="#"
+                       hx-get="/partials/research"
+                       hx-target="#content-area"
+                       hx-swap="innerHTML transition:true"
+                       class="nav-link nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-700/50 transition-all"
+                       onclick="setActiveNav(this)">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        Research
+                    </a>
+                </li>
+                <li class="animate-slide delay-600">
+                    <a href="#"
+                       hx-get="/partials/contact"
+                       hx-target="#content-area"
+                       hx-swap="innerHTML transition:true"
+                       class="nav-link nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-700/50 transition-all"
+                       onclick="setActiveNav(this)">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        Contact
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Dark Mode Toggle -->
+        <div class="p-4 border-t border-slate-200 dark:border-zinc-700">
+            <button
+                    onclick="toggleDarkMode()"
+                    class="w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-700/50 transition-all animate-slide delay-700"
+            >
+                    <span class="flex items-center gap-3">
+                        <span id="theme-icon" class="transition-transform duration-500">
+                            <!-- Sun icon (light mode) -->
+                            <svg class="w-4 h-4 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            </svg>
+                            <!-- Moon icon (dark mode) -->
+                            <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                            </svg>
+                        </span>
+                        <span class="dark:hidden">Light Mode</span>
+                        <span class="hidden dark:inline">Dark Mode</span>
+                    </span>
+                <span class="text-xs text-slate-400 dark:text-zinc-500 font-mono">⌘K</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="flex-1 lg:ml-64 pt-16 lg:pt-0">
+        <div id="content-area" class="min-h-screen">
+            <!-- Initial content loaded via HTMX or server-side -->
+            {% include "index.html" %}
+        </div>
+    </main>
+</div>
+
+<script>
+    // Mobile Menu Toggle
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        const closeIcon = document.getElementById('close-icon');
+        const isClosed = menu.classList.contains('translate-x-full');
+        
+        if (isClosed) {
+            menu.classList.remove('translate-x-full');
+            menuIcon.classList.add('hidden');
+            closeIcon.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        } else {
+            menu.classList.add('translate-x-full');
+            menuIcon.classList.remove('hidden');
+            closeIcon.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+    }
+
+    function handleMobileNav(el) {
+        // Toggle active state
+        document.querySelectorAll('#mobile-menu nav a').forEach(a => {
+            a.classList.remove('bg-slate-100', 'dark:bg-zinc-800');
+        });
+        el.classList.add('bg-slate-100', 'dark:bg-zinc-800');
+        
+        // Close menu
+        toggleMobileMenu();
+    }
+
+    // Dark mode toggle with animation
+    function toggleDarkMode() {
+        const html = document.documentElement;
+        const icon = document.getElementById('theme-icon');
+
+        icon.style.transform = 'rotate(360deg)';
+
+        setTimeout(() => {
+            html.classList.toggle('dark');
+            localStorage.setItem('darkMode', html.classList.contains('dark'));
+            icon.style.transform = 'rotate(0deg)';
+        }, 200);
+    }
+
+    // Check for saved dark mode preference
+    if (localStorage.getItem('darkMode') === 'true' ||
+        (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+    }
+
+    // Keyboard shortcut for dark mode
+    document.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+            e.preventDefault();
+            toggleDarkMode();
+        }
+    });
+
+    // Set active navigation
+    function setActiveNav(element) {
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.classList.remove('active', 'bg-slate-100', 'dark:bg-zinc-700/50');
+        });
+        element.classList.add('active', 'bg-slate-100', 'dark:bg-zinc-700/50');
+    }
+
+    // HTMX Event: Scroll to top after content swap
+    // This listens for the htmx:afterSwap event on the body
+    document.body.addEventListener('htmx:afterSwap', function(evt) {
+        // Check if the swapped content was intended for our main content area
+        if (evt.target.id === 'content-area') {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    });
+
+</script>
+</body>
+</html>

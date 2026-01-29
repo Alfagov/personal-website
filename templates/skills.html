@@ -1,0 +1,152 @@
+<!-- Skills Section -->
+<div class="p-6 lg:p-16 max-w-5xl">
+    
+    <!-- Section Header -->
+    <div class="mb-12">
+        <div class="animate-enter w-16 h-0.5 bg-gradient-to-r from-accent-gold to-transparent mb-6"></div>
+        <h2 class="animate-enter delay-100 font-serif text-4xl lg:text-5xl font-normal tracking-tight text-slate-900 dark:text-white mb-4">
+            Skills & Expertise
+        </h2>
+        <p class="animate-enter delay-200 text-lg text-slate-500 dark:text-zinc-400 max-w-xl">
+            A fusion of quantitative finance theory and production-grade engineering capabilities.
+        </p>
+    </div>
+    
+    <!-- Skills Grid -->
+    <div class="grid gap-8">
+        
+        <!-- Quant Finance -->
+        <div class="animate-enter delay-200">
+            <div class="p-8 rounded-2xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800/50 card-lift">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-accent-gold to-amber-600 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-slate-900 dark:text-white">Quantitative Finance</h3>
+                        <p class="text-sm text-slate-500 dark:text-zinc-400">Financial modeling & risk analysis</p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-3">
+                    {% for skill in skills.quant_finance %}
+                    <span class="px-4 py-2 text-sm font-medium bg-amber-50 dark:bg-amber-900/20 text-amber-800 dark:text-amber-300 rounded-xl border border-amber-200 dark:border-amber-800/30 hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-colors cursor-default">
+                        {{ skill }}
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Engineering -->
+        <div class="animate-enter delay-300">
+            <div class="p-8 rounded-2xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800/50 card-lift">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-accent-sapphire to-blue-600 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-slate-900 dark:text-white">Engineering</h3>
+                        <p class="text-sm text-slate-500 dark:text-zinc-400">Systems architecture & development</p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-3">
+                    {% for skill in skills.engineering %}
+                    <span class="px-4 py-2 text-sm font-medium bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300 rounded-xl border border-blue-200 dark:border-blue-800/30 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors cursor-default">
+                        {{ skill }}
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Certifications -->
+        <div class="animate-enter delay-400">
+            <div class="p-8 rounded-2xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800/50 card-lift">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-accent-emerald to-green-600 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-slate-900 dark:text-white">Certifications</h3>
+                        <p class="text-sm text-slate-500 dark:text-zinc-400">Professional credentials</p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-3">
+                    {% for cert in skills.certifications %}
+                    <span class="px-4 py-2 text-sm font-medium bg-emerald-50 dark:bg-emerald-900/20 text-emerald-800 dark:text-emerald-300 rounded-xl border border-emerald-200 dark:border-emerald-800/30 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-colors cursor-default">
+                        {{ cert }}
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Languages -->
+        <div class="animate-enter delay-500">
+            <div class="p-8 rounded-2xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800/50 card-lift">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-slate-900 dark:text-white">Languages</h3>
+                        <p class="text-sm text-slate-500 dark:text-zinc-400">Communication abilities</p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-3">
+                    {% for lang in skills.languages %}
+                    <span class="px-4 py-2 text-sm font-medium bg-violet-50 dark:bg-violet-900/20 text-violet-800 dark:text-violet-300 rounded-xl border border-violet-200 dark:border-violet-800/30 hover:bg-violet-100 dark:hover:bg-violet-900/30 transition-colors cursor-default">
+                        {{ lang }}
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Proficiency Matrix -->
+    <div class="animate-enter delay-600 mt-12 p-8 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 dark:from-zinc-800 dark:via-zinc-900 dark:to-zinc-800">
+        <h4 class="text-sm uppercase tracking-widest text-slate-400 mb-6">Core Competency Matrix</h4>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="text-center">
+                <div class="text-3xl font-serif text-white mb-2">∂</div>
+                <div class="text-xs text-slate-400">Derivatives</div>
+            </div>
+            <div class="text-center">
+                <div class="text-3xl font-serif text-white mb-2">Σ</div>
+                <div class="text-xs text-slate-400">Monte Carlo</div>
+            </div>
+            <div class="text-center">
+                <div class="text-3xl font-serif text-white mb-2">λ</div>
+                <div class="text-xs text-slate-400">Functional</div>
+            </div>
+            <div class="text-center">
+                <div class="text-3xl font-serif text-white mb-2">⧫</div>
+                <div class="text-xs text-slate-400">Distributed</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- CTA -->
+    <div class="animate-enter delay-700 mt-12 flex items-center justify-end">
+        <a href="#" 
+           hx-get="/partials/research" 
+           hx-target="#content-area"
+           hx-swap="innerHTML transition:true"
+           onclick="setActiveNav(document.querySelector('[hx-get=\'/partials/research\']'))"
+           class="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-lg font-medium text-sm hover:bg-slate-800 dark:hover:bg-stone-100 transition-all hover:-translate-y-0.5">
+            View Research
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+        </a>
+    </div>
+</div>

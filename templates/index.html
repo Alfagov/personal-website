@@ -1,0 +1,101 @@
+<!-- Hero Section -->
+<div class="p-6 lg:p-16 max-w-5xl">
+    
+    <!-- Top accent line -->
+    <div class="animate-enter w-16 h-0.5 bg-gradient-to-r from-accent-gold to-transparent mb-12"></div>
+    
+    <!-- Status badge -->
+    <div class="animate-enter delay-100 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800/50 mb-8">
+        <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+        <span class="text-xs font-medium text-emerald-700 dark:text-emerald-400 tracking-wide">
+            SEEKING FALL 2026 INTERNSHIPS
+        </span>
+    </div>
+    
+    <!-- Main heading with ticker effect -->
+    <div class="mb-8">
+        <h1 class="animate-enter delay-200 font-serif text-4xl lg:text-7xl font-normal tracking-tight text-slate-900 dark:text-white mb-4">
+            <span class="glitch-text inline-block">{{ profile.name }}</span>
+        </h1>
+        <div class="animate-enter delay-300 flex items-center gap-3">
+            <span class="text-lg lg:text-xl text-slate-500 dark:text-zinc-400 font-light ticker-cursor">
+                {{ profile.tagline }}
+            </span>
+        </div>
+    </div>
+    
+    <!-- Title -->
+    <p class="animate-enter delay-400 text-sm font-mono text-slate-600 dark:text-zinc-400 uppercase tracking-widest mb-12">
+        {{ profile.title }}
+    </p>
+    
+    <!-- Summary -->
+    <div class="animate-enter delay-500 max-w-2xl mb-16">
+        <p class="text-lg text-slate-600 dark:text-zinc-300 leading-relaxed">
+            {{ profile.summary }}
+        </p>
+    </div>
+    
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        {% for stat in profile.stats %}
+        <div class="animate-enter delay-{{ loop.index }}00 stat-card p-6 rounded-2xl border border-slate-200 dark:border-zinc-700 card-lift">
+            <div class="font-serif text-4xl lg:text-5xl text-accent-gold mb-2">
+                {{ stat.value }}
+            </div>
+            <div class="text-sm text-slate-500 dark:text-zinc-400 font-medium tracking-wide">
+                {{ stat.label }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Quick Links -->
+    <div class="animate-enter delay-700 flex flex-wrap gap-4">
+        <a href="#" 
+           hx-get="/partials/experience" 
+           hx-target="#content-area"
+           hx-swap="innerHTML transition:true"
+           onclick="setActiveNav(document.querySelector('[hx-get=\'/partials/experience\']'))"
+           class="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-lg font-medium text-sm hover:bg-slate-800 dark:hover:bg-stone-100 transition-all hover:-translate-y-0.5 hover:shadow-lg">
+            View Experience
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+        </a>
+        
+        <a href="#" 
+           hx-get="/partials/projects" 
+           hx-target="#content-area"
+           hx-swap="innerHTML transition:true"
+           onclick="setActiveNav(document.querySelector('[hx-get=\'/partials/projects\']'))"
+           class="inline-flex items-center gap-2 px-6 py-3 border border-slate-300 dark:border-zinc-600 text-slate-700 dark:text-zinc-300 rounded-lg font-medium text-sm hover:bg-slate-100 dark:hover:bg-zinc-800 transition-all hover:-translate-y-0.5">
+            View Projects
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+        </a>
+    </div>
+    
+    <!-- Education badges -->
+    <div class="animate-enter delay-800 mt-16 pt-8 border-t border-slate-200 dark:border-zinc-700">
+        <p class="text-xs text-slate-400 dark:text-zinc-500 uppercase tracking-widest mb-4">Education</p>
+        <div class="flex flex-wrap gap-3">
+            <div class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-zinc-800 rounded-lg border border-slate-200 dark:border-zinc-700">
+                <span class="text-sm font-medium">WashU Olin</span>
+                <span class="text-xs text-slate-400 dark:text-zinc-500">MS Quantitative Finance</span>
+            </div>
+            <div class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-zinc-800 rounded-lg border border-slate-200 dark:border-zinc-700">
+                <span class="text-sm font-medium">Bocconi</span>
+                <span class="text-xs text-slate-400 dark:text-zinc-500">BSc International Economics & Management</span>
+            </div>
+            <div class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-zinc-800 rounded-lg border border-slate-200 dark:border-zinc-700">
+                <span class="text-sm font-medium">MITx</span>
+                <span class="text-xs text-slate-400 dark:text-zinc-500">Micromasters DEDP</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Decorative element -->
+    <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-accent-gold/5 via-transparent to-transparent rounded-full blur-3xl pointer-events-none"></div>
+</div>
