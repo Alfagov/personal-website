@@ -66,7 +66,7 @@ cargo run --release
 RUST_LOG=debug cargo run
 ```
 
-The server will start at `http://localhost:3000`
+The server will start at `http://0.0.0.0:3000`
 
 ## 🎨 Design System
 
@@ -133,18 +133,6 @@ All portfolio content is defined in `src/main.rs`:
 - **Publications**: Research papers
 
 ## 🔧 Customization
-
-### Adding New Sections
-
-1. Create a new template in `templates/`
-2. Add a new template struct in `main.rs`
-3. Add a handler function
-4. Register the route in the router
-5. Add navigation link in `layout.html`
-
-### Modifying Content
-
-Edit the `init_app_state()` function in `main.rs` to update any content.
 
 ## 📜 License
 
