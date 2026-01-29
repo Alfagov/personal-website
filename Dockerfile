@@ -8,13 +8,21 @@ WORKDIR /usr/src/portfolio
 # Copy manifest files to cache dependencies
 COPY Cargo.toml Cargo.lock ./
 
+# Install Node.js and npm to build Tailwind CSS
+RUN apk add nodejs npm
+
 # Create a dummy main.rs to build dependencies
 RUN mkdir src
 
 # Copy the actual source code and templates
 COPY src ./src
 COPY templates ./templates
+COPY package.json package-lock.json tailwind.config.js ./
 COPY static ./static
+
+# Install dependencies and build Tailwind CSS
+RUN npm install
+RUN npm run build:css
 
 # Build the actual application
 RUN cargo build --release
