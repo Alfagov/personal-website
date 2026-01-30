@@ -52,8 +52,9 @@
     
     <!-- Quick Links -->
     <div class="animate-enter delay-700 flex flex-wrap gap-4">
-        <a href="#" 
+        <a href="/experience" 
            hx-get="/partials/experience" 
+           hx-push-url="/experience"
            hx-target="#content-area"
            hx-swap="innerHTML transition:true"
            onclick="setActiveNav(document.querySelector('[hx-get=\'/partials/experience\']'))"
@@ -64,8 +65,9 @@
             </svg>
         </a>
         
-        <a href="#" 
+        <a href="/projects" 
            hx-get="/partials/projects" 
+           hx-push-url="/projects"
            hx-target="#content-area"
            hx-swap="innerHTML transition:true"
            onclick="setActiveNav(document.querySelector('[hx-get=\'/partials/projects\']'))"

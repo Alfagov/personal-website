@@ -85,6 +85,11 @@ pub struct Publication {
 pub struct LayoutTemplate {
     pub title: String,
     pub profile: Profile,
+    pub page: &'static str,
+    pub experiences: Vec<Experience>,
+    pub projects: Vec<Project>,
+    pub skills: SkillGroups,
+    pub publications: Vec<Publication>,
 }
 
 #[derive(Template)]
@@ -151,6 +156,71 @@ async fn index_handler(State(state): State<Arc<AppState>>) -> impl IntoResponse 
     HtmlTemplate(LayoutTemplate {
         title: format!("{} | Portfolio", state.profile.name),
         profile: state.profile.clone(),
+        page: "home",
+        experiences: state.experiences.clone(),
+        projects: state.projects.clone(),
+        skills: state.skills.clone(),
+        publications: state.publications.clone(),
+    })
+}
+
+async fn experience_handler(State(state): State<Arc<AppState>>) -> impl IntoResponse {
+    HtmlTemplate(LayoutTemplate {
+        title: format!("Experience | {}", state.profile.name),
+        profile: state.profile.clone(),
+        page: "experience",
+        experiences: state.experiences.clone(),
+        projects: state.projects.clone(),
+        skills: state.skills.clone(),
+        publications: state.publications.clone(),
+    })
+}
+
+async fn projects_handler(State(state): State<Arc<AppState>>) -> impl IntoResponse {
+    HtmlTemplate(LayoutTemplate {
+        title: format!("Projects | {}", state.profile.name),
+        profile: state.profile.clone(),
+        page: "projects",
+        experiences: state.experiences.clone(),
+        projects: state.projects.clone(),
+        skills: state.skills.clone(),
+        publications: state.publications.clone(),
+    })
+}
+
+async fn skills_handler(State(state): State<Arc<AppState>>) -> impl IntoResponse {
+    HtmlTemplate(LayoutTemplate {
+        title: format!("Skills | {}", state.profile.name),
+        profile: state.profile.clone(),
+        page: "skills",
+        experiences: state.experiences.clone(),
+        projects: state.projects.clone(),
+        skills: state.skills.clone(),
+        publications: state.publications.clone(),
+    })
+}
+
+async fn research_handler(State(state): State<Arc<AppState>>) -> impl IntoResponse {
+    HtmlTemplate(LayoutTemplate {
+        title: format!("Research | {}", state.profile.name),
+        profile: state.profile.clone(),
+        page: "research",
+        experiences: state.experiences.clone(),
+        projects: state.projects.clone(),
+        skills: state.skills.clone(),
+        publications: state.publications.clone(),
+    })
+}
+
+async fn contact_handler(State(state): State<Arc<AppState>>) -> impl IntoResponse {
+    HtmlTemplate(LayoutTemplate {
+        title: format!("Contact | {}", state.profile.name),
+        profile: state.profile.clone(),
+        page: "contact",
+        experiences: state.experiences.clone(),
+        projects: state.projects.clone(),
+        skills: state.skills.clone(),
+        publications: state.publications.clone(),
     })
 }
 
@@ -423,8 +493,13 @@ async fn main() {
 
     // Build router
     let app = Router::new()
-        // Main page
+        // Main pages
         .route("/", get(index_handler))
+        .route("/experience", get(experience_handler))
+        .route("/projects", get(projects_handler))
+        .route("/skills", get(skills_handler))
+        .route("/research", get(research_handler))
+        .route("/contact", get(contact_handler))
         // HTMX partials
         .route("/partials/home", get(home_partial))
         .route("/partials/experience", get(experience_partial))

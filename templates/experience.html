@@ -89,8 +89,9 @@
                     </svg>
                 </a>
             </div>
-            <a href="#" 
+            <a href="/projects" 
                hx-get="/partials/projects" 
+               hx-push-url="/projects"
                hx-target="#content-area"
                hx-swap="innerHTML transition:true"
                onclick="setActiveNav(document.querySelector('[hx-get=\'/partials/projects\']'))"
