@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./templates/**/*.html"],
+  content: ["./templates/**/*.html", "./templates/*.html"],
   darkMode: 'class',
   theme: {
     extend: {
@@ -16,6 +16,7 @@ module.exports = {
           'gold': '#c9a227',
           'emerald': '#10b981',
           'sapphire': '#3b82f6',
+          'blue': '#3498db',
         }
       },
       animation: {

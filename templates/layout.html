@@ -240,6 +240,20 @@
             <a href="/research" onclick="handleMobileNav(this)" hx-get="/partials/research" hx-push-url="/research" hx-target="#content-area" hx-swap="innerHTML transition:true" class="block px-4 py-3 rounded-lg text-lg font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800">Research</a>
             <a href="/contact" onclick="handleMobileNav(this)" hx-get="/partials/contact" hx-push-url="/contact" hx-target="#content-area" hx-swap="innerHTML transition:true" class="block px-4 py-3 rounded-lg text-lg font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800">Contact</a>
         </nav>
+        {% if !links.is_empty() %}
+        <div class="mt-6 pt-6 border-t border-slate-200 dark:border-zinc-700 px-2">
+            <p class="px-4 mb-3 text-xs font-mono uppercase tracking-widest text-slate-400 dark:text-zinc-500">Live Projects</p>
+            {% for link in links %}
+            <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer"
+               class="flex items-center gap-3 px-4 py-3 rounded-lg text-lg font-medium bg-gradient-to-r from-accent-gold/15 to-accent-gold/5 text-accent-gold border border-accent-gold/20 hover:from-accent-gold/25 hover:to-accent-gold/10 hover:border-accent-gold/40 transition-all mb-2">
+                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                </svg>
+                {{ link.name }}
+            </a>
+            {% endfor %}
+        </div>
+        {% endif %}
         <div class="mt-8 pt-8 border-t border-slate-200 dark:border-zinc-700">
             <button onclick="toggleDarkMode()" class="w-full flex items-center justify-between px-4 py-3 rounded-lg text-lg font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800">
                 <span class="flex items-center gap-3">
@@ -351,11 +365,31 @@
             </ul>
         </nav>
 
+        <!-- Live Projects -->
+        {% if !links.is_empty() %}
+        <div class="px-4 pb-3 mb-3 border-t border-slate-200 dark:border-zinc-700 pt-4">
+            <p class="px-4 mb-3 text-s font-mono uppercase tracking-widest text-slate-400 dark:text-zinc-500 animate-slide delay-700">
+                Live Projects
+            </p>
+            <div class="space-y-2">
+                {% for link in links %}
+                <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer"
+                   class="animate-slide delay-800 flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium bg-gradient-to-r from-accent-sapphire/50 to-accent-sapphire/15 text-accent-gold border border-accent-gold/20 hover:from-accent-gold/25 hover:to-accent-gold/10 hover:border-accent-gold/40 transition-all hover:-translate-y-0.5">
+                    <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                    </svg>
+                    <span class="truncate">{{ link.name }}</span>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
         <!-- Dark Mode Toggle -->
         <div class="p-4 border-t border-slate-200 dark:border-zinc-700">
             <button
                     onclick="toggleDarkMode()"
-                    class="w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-700/50 transition-all animate-slide delay-700"
+                    class="w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium text-slate-600 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-700/50 transition-all animate-slide delay-800"
             >
                     <span class="flex items-center gap-3">
                         <span id="theme-icon" class="transition-transform duration-500">

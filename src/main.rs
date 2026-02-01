@@ -21,6 +21,7 @@ pub struct AppState {
     pub skills: SkillGroups,
     pub projects: Vec<Project>,
     pub publications: Vec<Publication>,
+    pub links: Vec<Link>,
 }
 
 #[derive(Clone)]
@@ -68,6 +69,16 @@ pub struct Project {
     pub description: &'static str,
     pub tech: Vec<&'static str>,
     pub highlights: Vec<&'static str>,
+    pub url: Option<&'static str>,
+    pub github: Option<&'static str>,
+}
+
+#[derive(Clone)]
+pub struct Link {
+    pub name: &'static str,
+    pub url: &'static str,
+    pub description: &'static str,
+    pub category: &'static str,
 }
 
 #[derive(Clone)]
@@ -90,6 +101,7 @@ pub struct LayoutTemplate {
     pub projects: Vec<Project>,
     pub skills: SkillGroups,
     pub publications: Vec<Publication>,
+    pub links: Vec<Link>,
 }
 
 #[derive(Template)]
@@ -161,6 +173,7 @@ async fn index_handler(State(state): State<Arc<AppState>>) -> impl IntoResponse 
         projects: state.projects.clone(),
         skills: state.skills.clone(),
         publications: state.publications.clone(),
+        links: state.links.clone(),
     })
 }
 
@@ -173,6 +186,7 @@ async fn experience_handler(State(state): State<Arc<AppState>>) -> impl IntoResp
         projects: state.projects.clone(),
         skills: state.skills.clone(),
         publications: state.publications.clone(),
+        links: state.links.clone(),
     })
 }
 
@@ -185,6 +199,7 @@ async fn projects_handler(State(state): State<Arc<AppState>>) -> impl IntoRespon
         projects: state.projects.clone(),
         skills: state.skills.clone(),
         publications: state.publications.clone(),
+        links: state.links.clone(),
     })
 }
 
@@ -197,6 +212,7 @@ async fn skills_handler(State(state): State<Arc<AppState>>) -> impl IntoResponse
         projects: state.projects.clone(),
         skills: state.skills.clone(),
         publications: state.publications.clone(),
+        links: state.links.clone(),
     })
 }
 
@@ -209,6 +225,7 @@ async fn research_handler(State(state): State<Arc<AppState>>) -> impl IntoRespon
         projects: state.projects.clone(),
         skills: state.skills.clone(),
         publications: state.publications.clone(),
+        links: state.links.clone(),
     })
 }
 
@@ -221,6 +238,7 @@ async fn contact_handler(State(state): State<Arc<AppState>>) -> impl IntoRespons
         projects: state.projects.clone(),
         skills: state.skills.clone(),
         publications: state.publications.clone(),
+        links: state.links.clone(),
     })
 }
 
@@ -394,6 +412,8 @@ fn init_app_state() -> AppState {
                 "Glosten-Milgrom Model",
                 "Probability Theory",
             ],
+            url: Some("https://quant.lpulcini.com"),
+            github: None,
         },
         Project {
             name: "Portfolio Optimization Suite",
@@ -406,6 +426,8 @@ fn init_app_state() -> AppState {
                 "Scenario analysis tools",
                 "Risk-adjusted return metrics",
             ],
+            url: None,
+            github: None,
         },
         Project {
             name: "Market Forecasting & Alpha Research",
@@ -418,6 +440,8 @@ fn init_app_state() -> AppState {
                 "Drift diagnostics implementation",
                 "Limit order book feature engineering",
             ],
+            url: None,
+            github: None,
         },
         Project {
             name: "Raccoon Fantasy",
@@ -430,6 +454,8 @@ fn init_app_state() -> AppState {
                 "Liquidity monitoring systems",
                 "In-game economic modeling",
             ],
+            url: None,
+            github: None,
         },
         Project {
             name: "Similar",
@@ -442,6 +468,8 @@ fn init_app_state() -> AppState {
                 "Testing pipelines and performance metrics",
                 "Incubator pitch and funding",
             ],
+            url: None,
+            github: None,
         },
         Project {
             name: "IBM Watson Insurance AI",
@@ -454,6 +482,8 @@ fn init_app_state() -> AppState {
                 "Featured on IBM AI Developer blog",
                 "End-to-end ML pipeline",
             ],
+            url: None,
+            github: None,
         },
     ];
 
@@ -464,12 +494,22 @@ fn init_app_state() -> AppState {
         },
     ];
 
+    let links = vec![
+        Link {
+            name: "Quant Sim",
+            url: "https://quant.lpulcini.com",
+            description: "Interactive financial models showcase featuring Brownian Motion simulations, the Glosten-Milgrom market microstructure model, and probability theory visualizations — all rendered in real-time with Rust and WebAssembly.",
+            category: "Quantitative Finance",
+        },
+    ];
+
     AppState {
         profile,
         experiences,
         skills,
         projects,
         publications,
+        links,
     }
 }
 
@@ -479,7 +519,6 @@ fn init_app_state() -> AppState {
 
 #[tokio::main]
 async fn main() {
-    // Initialize tracing
     tracing_subscriber::registry()
         .with(
             tracing_subscriber::EnvFilter::try_from_default_env()

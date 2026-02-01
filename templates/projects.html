@@ -86,6 +86,19 @@
                         </div>
                         {% endfor %}
                     </div>
+
+                    {% if project.url.is_some() %}
+                    <!-- Visit Link -->
+                    <div class="flex justify-end pt-6 border-t border-slate-100 dark:border-zinc-700 mt-6">
+                        <a href="{{ project.url.unwrap() }}" target="_blank" rel="noopener noreferrer"
+                           class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-accent-gold/10 text-accent-gold hover:bg-accent-gold/20 transition-all">
+                            Visit Live
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                            </svg>
+                        </a>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
